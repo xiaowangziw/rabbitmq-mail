@@ -29,3 +29,33 @@ CREATE TABLE `msg_log` (
   PRIMARY KEY (`msg_id`),
   UNIQUE KEY `unq_msg_id` (`msg_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息投递日志';
+
+
+CREATE TABLE `schedule_job` (
+  `job_id` varchar(32) NOT NULL COMMENT '任务id',
+  `bean_name` varchar(200) DEFAULT NULL COMMENT 'spring bean名称',
+  `method_name` varchar(100) DEFAULT NULL COMMENT '方法名',
+  `params` varchar(2000) DEFAULT NULL COMMENT '参数',
+  `cron_expression` varchar(100) DEFAULT NULL COMMENT 'cron表达式',
+  `status` varchar(10) DEFAULT NULL COMMENT '任务状态  1：正常  0：暂停',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `invalid_time` int(11) DEFAULT NULL COMMENT '任务锁失效时间（毫秒）',
+  PRIMARY KEY (`job_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务';
+
+
+CREATE TABLE `schedule_job_log` (
+  `log_id` varchar(32) NOT NULL COMMENT '任务日志id',
+  `job_id` varchar(32) NOT NULL COMMENT '任务id',
+  `bean_name` varchar(200) DEFAULT NULL COMMENT 'spring bean名称',
+  `method_name` varchar(100) DEFAULT NULL COMMENT '方法名',
+  `params` varchar(2000) DEFAULT NULL COMMENT '参数',
+  `status` varchar(10) NOT NULL COMMENT '任务状态    0：成功    1：失败',
+  `error` varchar(2000) DEFAULT NULL COMMENT '失败信息',
+  `times` int(11) NOT NULL COMMENT '耗时(单位：毫秒)',
+  `ip_address` varchar(20) DEFAULT NULL COMMENT '执行机器地址',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`log_id`),
+  KEY `job_id` (`job_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='定时任务日志';
