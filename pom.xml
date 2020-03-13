@@ -134,12 +134,6 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
 
         <!--通用mapper启动器-->
         <!-- https://mvnrepository.com/artifact/tk.mybatis/mapper-spring-boot-starter -->
